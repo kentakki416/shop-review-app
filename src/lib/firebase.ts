@@ -28,7 +28,9 @@ const db = getFirestore(app)
 export const getShops = async() => {
   // refrence: 参照。取得や更新などはrefrenceに対して行う
   // snapshot: スナップショット。データの状態を表す.docsででデータを取得できる
-  const querySnapshot = await getDocs(collection(db, 'shops'))
+  const ref = collection(db, 'shops')
+  const q = query(ref, orderBy('score', 'desc'))
+  const querySnapshot = await getDocs(q)
   const shops = querySnapshot.docs.map((doc) => doc.data() as Shop)
   return shops
 }

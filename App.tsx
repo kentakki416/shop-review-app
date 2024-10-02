@@ -1,7 +1,8 @@
-import { StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
 import { useEffect, useState } from 'react'
 import type { Shop } from './src/types/shop'
 import { getShops } from './src/lib/firebase'
+import ShopReviewItem from './src/components/ShopReviewItem'
 
 export default function App() {
 
@@ -17,15 +18,16 @@ export default function App() {
   }
 
   return(
-    <View style={styles.container}>
-      {shops.map((shop, index) => {
-        return (
-          <Text key={index}>
-            {shop.name} {shop.place}
-          </Text>
-        )
-      })}
-    </View>
+    <SafeAreaView style={styles.container}>
+      <FlatList
+        data={shops}
+        renderItem={({item}: {item: Shop}) => (
+          <ShopReviewItem shop={item} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+      />
+    </SafeAreaView>
   )
 
 }
