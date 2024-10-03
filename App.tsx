@@ -1,42 +1,34 @@
-import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native';
+import { FlatList, SafeAreaView, StyleSheet, Text, View } from 'react-native'
 import { useEffect, useState } from 'react'
 import type { Shop } from './src/types/shop'
 import { getShops } from './src/lib/firebase'
 import ShopReviewItem from './src/components/ShopReviewItem'
+import { AppNavigator } from './src/navigation/AppNavigator'
 
 export default function App() {
 
-  const [shops, setShops] = useState<Shop[]>([])
+    const [shops, setShops] = useState<Shop[]>([])
 
-  useEffect(() => {
-    getFirebaseItems()
-  }, [])
+    useEffect(() => {
+        getFirebaseItems()
+    }, [])
 
-  const getFirebaseItems = async() => {
-    const shops = await getShops()
-    setShops(shops)
-  }
+    const getFirebaseItems = async() => {
+        const shops = await getShops()
+        setShops(shops)
+    }
 
-  return(
-    <SafeAreaView style={styles.container}>
-      <FlatList
-        data={shops}
-        renderItem={({item}: {item: Shop}) => (
-          <ShopReviewItem shop={item} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
-      />
-    </SafeAreaView>
-  )
+    return (
+      <AppNavigator />
+    )
 
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+})
