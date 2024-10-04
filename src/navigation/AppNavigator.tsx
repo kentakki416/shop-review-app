@@ -1,9 +1,11 @@
 import { NavigationContainer } from '@react-navigation/native'
 import MainTabNavigator from './MainTabNavigator'
 import AuthScreen from '../screens/AuthScreen'
+import { useContext } from 'react'
+import { UserContext } from '../contexts/userContexts'
 
 export const AppNavigator = () => {
-    const user = {id: '123'};
+    const {user} = useContext(UserContext)
     return (
         <NavigationContainer>
           {!user ? <AuthScreen /> :<MainTabNavigator/>}

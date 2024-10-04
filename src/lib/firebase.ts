@@ -1,8 +1,10 @@
 
 import { initializeApp } from 'firebase/app'
 // import { getAnalytics } from "firebase/analytics";
-import { getFirestore, collection, getDocs, orderBy, query } from 'firebase/firestore'
+import { getFirestore, collection, getDocs, orderBy, query, where, setDoc, doc, getDoc } from 'firebase/firestore'
+import { getAuth, signInAnonymously} from 'firebase/auth'
 import type { Shop } from '../types/shop'
+import { initialUser, type User } from '../types/user'
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -33,4 +35,27 @@ export const getShops = async() => {
     const querySnapshot = await getDocs(q)
     const shops = querySnapshot.docs.map((doc) => doc.data() as Shop)
     return shops
+}
+
+export const signin = async() => {
+    // 匿名認証
+    const auth = getAuth()
+    const userCredential = await signInAnonymously(auth)
+    const {uid} = userCredential.user
+
+    const userDocRef = doc(db, 'users', uid);
+    const userDoc = await getDoc(userDocRef);
+    if(userDoc.exists()) {
+        // ユーザー登
+        await setDoc(doc(db, 'users', uid), initialUser)
+        return {
+            ...initialUser,
+            id: uid
+        } as User;
+    } else {
+        return {
+            id: uid,
+            ...userDoc.data() as User
+        } as User;
+    }    
 }

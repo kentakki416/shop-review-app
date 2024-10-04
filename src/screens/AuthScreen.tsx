@@ -1,7 +1,18 @@
+import { useContext, useEffect } from 'react'
 import { ActivityIndicator, StyleSheet, Text, SafeAreaView } from 'react-native'
+import { signin } from '../lib/firebase'
+import { UserContext } from '../contexts/userContexts'
 
 const AuthScreen = (): JSX.Element => {
-  // const { signIn } = useAuth();
+  const {setUser} = useContext(UserContext)
+  useEffect(() => {
+    const fetchUser = async () => {
+      
+      const user = await signin()
+      setUser(user)
+    }
+    fetchUser()
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
