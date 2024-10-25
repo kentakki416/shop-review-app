@@ -7,6 +7,6 @@ type UserContextValue = {
 }
 
 export const UserContext = createContext<UserContextValue>({
-  user: null,
-  setUser: () => {}
+    user: null,
+    setUser: () => {},
 })

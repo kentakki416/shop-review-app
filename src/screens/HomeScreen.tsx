@@ -10,7 +10,7 @@ type Props = {
   navigation: StackNavigationProp<RootStackParamList, 'Home'>;
 }
 
-const HomeScreen = ({navigation}: Props) => {
+const HomeScreen = ({ navigation }: Props) => {
 
     const [shops, setShops] = useState<Shop[]>([])
 
@@ -24,7 +24,7 @@ const HomeScreen = ({navigation}: Props) => {
     }
 
     const onPressShop = (shop: Shop) => {
-      navigation.navigate("Shop", {shop})
+        navigation.navigate('Shop', { shop })
     }
 
     return (

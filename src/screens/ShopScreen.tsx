@@ -12,29 +12,29 @@ type Props = {
 }
 
 const ShopScreen = (props: Props): JSX.Element => {
-  const {navigation, route} = props
-  const {shop} = route.params
+    const { navigation, route } = props
+    const { shop } = route.params
 
-  useEffect(() => {
-    navigation.setOptions({title: shop.name})
-  }, [shop])
+    useEffect(() => {
+        navigation.setOptions({ title: shop.name })
+    }, [shop])
 
-  return (
-    <SafeAreaView style={styles.container}>
-      <ShopDetail shop={shop}/>
-      <FloatingActionButton
-        iconName="plus"
-        onPress={() => {navigation.navigate("CreateReview", {shop})}}/>
-    </SafeAreaView>
-  )
+    return (
+        <SafeAreaView style={styles.container}>
+            <ShopDetail shop={shop}/>
+            <FloatingActionButton
+                iconName="plus"
+                onPress={() => {navigation.navigate('CreateReview', { shop })}}/>
+        </SafeAreaView>
+    )
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'flex-start'
-  }
+    container: {
+        flex: 1,
+        backgroundColor: '#fff',
+        justifyContent: 'flex-start',
+    },
 })
 
 export default ShopScreen

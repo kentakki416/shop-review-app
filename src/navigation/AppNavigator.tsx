@@ -5,10 +5,10 @@ import { useContext } from 'react'
 import { UserContext } from '../contexts/userContexts'
 
 export const AppNavigator = () => {
-    const {user} = useContext(UserContext)
+    const { user } = useContext(UserContext)
     return (
         <NavigationContainer>
-          {!user ? <AuthScreen /> :<MainTabNavigator/>}
+            {!user ? <AuthScreen /> :<MainTabNavigator/>}
         </NavigationContainer>
     )
 }

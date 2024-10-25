@@ -21,7 +21,7 @@ export default function App() {
     }
 
     return (
-        <UserContext.Provider value={{user, setUser}}>
+        <UserContext.Provider value={{ user, setUser }}>
             <AppNavigator />
         </UserContext.Provider>
     )

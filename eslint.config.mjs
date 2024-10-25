@@ -16,7 +16,7 @@ export default [
             'semi': ['error', 'never'],
             // 文字列はシングルクォートを使用
             'quotes': ['error', 'single'],
-            // インデントは2スペース
+            // インデントは4スペース
             'indent': ['error', 4],
             // 未使用の変数を禁止
             'no-unused-vars': ['error'],
