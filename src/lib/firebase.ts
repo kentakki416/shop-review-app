@@ -2,7 +2,7 @@
 import { initializeApp } from 'firebase/app'
 // import { getAnalytics } from "firebase/analytics";
 import { getFirestore, collection, getDocs, orderBy, query, where, setDoc, doc, getDoc, addDoc, type DocumentSnapshot, type DocumentData } from 'firebase/firestore'
-import { getAuth, initializeAuth, signInAnonymously } from 'firebase/auth'
+import { getAuth, initializeAuth, signInAnonymously, getReactNativePersistence } from 'firebase/auth'
 import { getDownloadURL, getStorage, ref, uploadBytes} from 'firebase/storage'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import type { Shop } from '../types/shop'
@@ -26,9 +26,9 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)
 // const analytics = getAnalytics(app);
-// initializeAuth(app, {
-//     persistence: getReactNativePersistence(AsyncStorage)
-//   })
+initializeAuth(app, {
+    persistence: getReactNativePersistence(AsyncStorage)
+  })
 const db = getFirestore(app)
 
 const storage = getStorage(app, 'gs://shop-review-df043.appspot.com')
@@ -78,10 +78,12 @@ export const setReview = async(shopId: string, review: Review) => {
 }
 
 export const createReviewRef = async (shopId: string) => {
-    const docRef = doc(db, 'shops', shopId, 'reviews')
-    const docSnap = await getDoc(docRef)
-    return docSnap.data()
-}
+    // Firestoreの参照を作成し、新しいドキュメント参照を返します
+    const reviewCollectionRef = collection(db, 'shops', shopId, 'reviews');
+    const newReviewDocRef = doc(reviewCollectionRef); // 新しいドキュメント参照を作成
+    
+    return newReviewDocRef;
+  };
 
 export const uploadImage = async(uri: string, path: string) => {
     // uriをblobに変換
@@ -98,4 +100,19 @@ export const uploadImage = async(uri: string, path: string) => {
         console.log(e)
     }
     return downloadUrl
+}
+
+export const getReviews = async(shopId: string) => {
+try {
+    const reviewsCollectionRef = collection(db, 'shops', shopId, 'reviews');
+    const reviewsQuery = query(reviewsCollectionRef, orderBy('createdAt', 'desc'));
+    const querySnapshot = await getDocs(reviewsQuery);
+    
+    return querySnapshot.docs.map(
+        (doc) => ({ ...doc.data(), id: doc.id } as Review)
+    );
+    } catch (error) {
+    console.error('Error getting reviews:', error);
+    throw error;
+    }
 }

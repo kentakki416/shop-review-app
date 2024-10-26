@@ -4,8 +4,9 @@
 ショップレビューアプリ
 
 ## 機能
-
-* Firebase Authenticateを使ったログイン
+* react-native x expo
+* React Navigationによる画面遷移
+* Firebase Authenticateとcontextを使ったログインと状態管理
 * Firebase Storageを使ったお店のレビュー投稿
 * Cloud Storageを使った画像（お店のレビュー画像）の保存 
 * Algoliaを使った全文検索
